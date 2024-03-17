@@ -4,8 +4,8 @@ using UnityEngine;
 public class AgentInput : MonoBehaviour
 {
 
-    public event Action<Vector2> MovementEvent;
-    public event Action JumpEvent;
+    public event Action<float> MovementEvent;
+    public event Action<bool> JumpEvent;
     public event Action DashEvent;
 
     private void Update()
@@ -17,17 +17,20 @@ public class AgentInput : MonoBehaviour
 
     private void Movement()
     {
-        Vector2 direction = Vector2.zero;
-        direction.x = Input.GetAxisRaw("Horizontal");
-        direction.y = Input.GetAxisRaw("Vertical");
-        MovementEvent?.Invoke(direction.normalized);
+        float direction;
+        direction = Input.GetAxisRaw("Horizontal");
+        MovementEvent?.Invoke(direction);
     }
 
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            JumpEvent?.Invoke();
+            JumpEvent?.Invoke(true);
+        }
+        else if(Input.GetKeyUp(KeyCode.Space))
+        {
+            JumpEvent?.Invoke(false);
         }
     }
 
