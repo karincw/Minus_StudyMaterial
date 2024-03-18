@@ -20,7 +20,7 @@ public class FallState : AgentState
 
     public override void UpdateState()
     {
-        if (_agent.Movement.IsGround == true)
+        if (_agent.Movement.IsGround() == true)
         {
             _agent.ChangeState(PlayerFSMSTate.Idle);
         }

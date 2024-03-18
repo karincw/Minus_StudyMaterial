@@ -10,6 +10,7 @@ public class JumpState : AgentState
     {
         base.Enter();
         _agent.Input.MovementEvent += HandleMovementEvent;
+        _agent.Movement.Jump();
     }
 
     public override void Exit()
@@ -20,7 +21,7 @@ public class JumpState : AgentState
 
     public override void UpdateState()
     {
-        if (_agent.Movement.isFall == true)
+        if (_agent.Movement.isFall() == true)
         {
             _agent.ChangeState(PlayerFSMSTate.Fall);
         }

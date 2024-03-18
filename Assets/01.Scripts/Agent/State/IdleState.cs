@@ -29,7 +29,7 @@ public class IdleState : AgentState
         {
             _agent.ChangeState(PlayerFSMSTate.Run);
         }
-        else if (_agent.Movement.isFall == true)
+        else if (_agent.Movement.isFall() == true)
         {
             _agent.ChangeState(PlayerFSMSTate.Fall);
         }

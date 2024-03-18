@@ -39,15 +39,19 @@ public class Agent : MonoBehaviour
         AgentFSM.Add(PlayerFSMSTate.Idle, new IdleState(this, "Idle"));
         AgentFSM.Add(PlayerFSMSTate.Run, new RunState(this, "Run"));
         AgentFSM.Add(PlayerFSMSTate.Jump, new JumpState(this, "Jump"));
-        AgentFSM.Add(PlayerFSMSTate.Fall, new FallState(this, "Fall")); ;
-        AgentFSM.Add(PlayerFSMSTate.Dash, new DashState(this, "Dash")); ;
-        AgentFSM.Add(PlayerFSMSTate.Hit, new HitState(this, "Hit")); ;
+        AgentFSM.Add(PlayerFSMSTate.Fall, new FallState(this, "Fall"));
+        AgentFSM.Add(PlayerFSMSTate.Dash, new DashState(this, "Dash"));
+        AgentFSM.Add(PlayerFSMSTate.Hit, new HitState(this, "Hit"));
 
         #endregion
     }
 
     private void Update()
     {
+        if (CurrentState == null)
+        {
+            CurrentState = AgentFSM[PlayerFSMSTate.Idle];
+        }
         CurrentState.UpdateState();
     }
 

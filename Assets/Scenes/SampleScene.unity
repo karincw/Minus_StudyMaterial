@@ -41860,8 +41860,7 @@ MonoBehaviour:
   Movement: {fileID: 0}
   Animator: {fileID: 0}
   Input: {fileID: 983042222}
-  state: 0
-  CurrentState: {fileID: 0}
+  state: 1
 --- !u!251 &983042225
 PlatformEffector2D:
   m_ObjectHideFlags: 0

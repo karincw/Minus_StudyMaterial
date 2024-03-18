@@ -28,7 +28,7 @@ public class RunState : AgentState
         {
             _agent.ChangeState(PlayerFSMSTate.Idle);
         }
-        else if (_agent.Movement.isFall == true)
+        else if (_agent.Movement.isFall() == true)
         {
             _agent.ChangeState(PlayerFSMSTate.Fall);
         }

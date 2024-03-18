@@ -14,14 +14,11 @@ public class AgentMovement : MonoBehaviour
 
     #endregion
 
-    public bool isFall => _rigidbody.velocity.y < -0.1f;
     [SerializeField] private float Gravity = -9.8f;
     private float v_velocity = 0;
 
     private float _moveDirection = 0;
     [SerializeField] private LayerMask whatIsGround;
-
-    public bool IsGround => Physics2D.Raycast(transform.position, Vector2.down, 0.5f + 0.1f, whatIsGround).collider != null;
 
     private void Awake()
     {
@@ -34,19 +31,33 @@ public class AgentMovement : MonoBehaviour
         _rigidbody.velocity = new Vector2(_moveDirection * moveSpeed, v_velocity);
     }
 
+    public bool isFall()
+    {
+        return _rigidbody.velocity.y < -0.1f;
+    }
+
+    public bool IsGround()
+    {
+        return Physics2D.Raycast(transform.position, Vector2.down, 0.5f + 0.1f, whatIsGround).collider != null;
+    }
+
     public void SetMove(float dir)
     {
         _moveDirection = dir;
         if (dir > 0)
+        {
             SetDirection(false);
+        }
         else if (dir < 0)
+        {
             SetDirection(true);
+        }
 
     }
 
     public void ApplyGravity()
     {
-        if (IsGround == true && v_velocity <= 0)
+        if (IsGround() && v_velocity <= 0)
         {
             v_velocity = -0.03f;
         }

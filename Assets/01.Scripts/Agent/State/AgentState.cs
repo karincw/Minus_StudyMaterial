@@ -11,7 +11,7 @@ public abstract class AgentState
     }
     public virtual void Exit()
     {
-        _agent.Animator.SetAnimation(_animBoolHash, true);
+        _agent.Animator.SetAnimation(_animBoolHash, false);
     }
     public abstract void UpdateState();
 
