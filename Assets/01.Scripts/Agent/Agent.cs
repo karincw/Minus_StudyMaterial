@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerFSMSTate
+public enum PlayerFSMState
 {
-    Idle = 1,
-    Run = 2,
-    Dash = 4,
-    Jump = 8,
-    Fall = 16,
-    Hit = 32,
+    Idle,
+    Run,
+    Jump,
+    Fall
 }
 
 public class Agent : MonoBehaviour
@@ -19,12 +17,11 @@ public class Agent : MonoBehaviour
     [HideInInspector] public AgentAnimator Animator;
     public AgentInput Input;
 
+    private PlayerFSMState state = PlayerFSMState.Idle;
+    private PlayerState currentState;
+    private Dictionary<PlayerFSMState, PlayerState> stateMachine = new();
+
     #endregion
-
-    public PlayerFSMSTate state = PlayerFSMSTate.Idle;
-
-    public AgentState CurrentState;
-    public Dictionary<PlayerFSMSTate, AgentState> AgentFSM = new Dictionary<PlayerFSMSTate, AgentState>();
 
     private void Awake()
     {
@@ -34,32 +31,29 @@ public class Agent : MonoBehaviour
         Animator = visualTrm.GetComponent<AgentAnimator>();
         Animator.Agent = this;
 
-        #region StateInit
+        stateMachine.Add(PlayerFSMState.Idle, new PlayerIdleState(this, "Idle"));
+        stateMachine.Add(PlayerFSMState.Run, new PlayerRunState(this, "Run"));
+        stateMachine.Add(PlayerFSMState.Jump, new PlayerJumpState(this, "Jump"));
+        stateMachine.Add(PlayerFSMState.Fall, new PlayerFallState(this, "Fall"));
+    }
 
-        AgentFSM.Add(PlayerFSMSTate.Idle, new IdleState(this, "Idle"));
-        AgentFSM.Add(PlayerFSMSTate.Run, new RunState(this, "Run"));
-        AgentFSM.Add(PlayerFSMSTate.Jump, new JumpState(this, "Jump"));
-        AgentFSM.Add(PlayerFSMSTate.Fall, new FallState(this, "Fall"));
-        AgentFSM.Add(PlayerFSMSTate.Dash, new DashState(this, "Dash"));
-        AgentFSM.Add(PlayerFSMSTate.Hit, new HitState(this, "Hit"));
-
-        #endregion
+    private void Start()
+    {
+        currentState = stateMachine[PlayerFSMState.Idle];
+        currentState.Enter();
     }
 
     private void Update()
     {
-        if (CurrentState == null)
-        {
-            CurrentState = AgentFSM[PlayerFSMSTate.Idle];
-        }
-        CurrentState.UpdateState();
+        currentState.UpdateState();
     }
 
-    public void ChangeState(PlayerFSMSTate nextState)
+    public void ChangeState(PlayerFSMState state)
     {
-        CurrentState.Exit();
-        CurrentState = AgentFSM[nextState];
-        CurrentState.Enter();
+        currentState.Exit();
+        currentState = stateMachine[state];
+        this.state = state;
+        currentState.Enter();
     }
 
 }

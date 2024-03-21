@@ -31,7 +31,7 @@ public class AgentMovement : MonoBehaviour
         _rigidbody.velocity = new Vector2(_moveDirection * moveSpeed, v_velocity);
     }
 
-    public bool isFall()
+    public bool IsFall()
     {
         return _rigidbody.velocity.y < -0.1f;
     }
@@ -44,15 +44,6 @@ public class AgentMovement : MonoBehaviour
     public void SetMove(float dir)
     {
         _moveDirection = dir;
-        if (dir > 0)
-        {
-            SetDirection(false);
-        }
-        else if (dir < 0)
-        {
-            SetDirection(true);
-        }
-
     }
 
     public void ApplyGravity()
@@ -63,13 +54,8 @@ public class AgentMovement : MonoBehaviour
         }
         else
         {
-            v_velocity += Gravity + Time.fixedDeltaTime;
+            v_velocity += Gravity;
         }
-    }
-
-    public void SetDirection(bool LookLeft)
-    {
-        Agent.Animator.SetFlip(LookLeft);
     }
 
     public void Jump()
@@ -77,8 +63,11 @@ public class AgentMovement : MonoBehaviour
         v_velocity = jumpPower;
     }
 
+    //ADD
     public void StopImmediately()
     {
-        _rigidbody.velocity = Vector2.zero;
+        v_velocity = 0;
+        _moveDirection = 0;
     }
+
 }

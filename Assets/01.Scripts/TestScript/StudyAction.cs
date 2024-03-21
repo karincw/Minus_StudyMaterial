@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Studys
@@ -5,13 +6,9 @@ namespace Studys
 
     public class StudyAction : MonoBehaviour
     {
-
-
-
         public void TestMethod()
         {
 
         }
     }
-
 }
