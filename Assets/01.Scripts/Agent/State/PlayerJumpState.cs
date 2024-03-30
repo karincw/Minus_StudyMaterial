@@ -8,22 +8,34 @@ public class PlayerJumpState : PlayerState
     {
     }
 
+    private float direction = 0.06f;
+
     public override void Enter()
     {
         base.Enter();
+        _agent.Input.OnMovementEvent += HandleMovementEvent;
         _agent.Movement.Jump();
     }
 
     public override void Exit()
     {
+        _agent.Input.OnMovementEvent -= HandleMovementEvent;
         base.Exit();
     }
 
     public override void UpdateState()
     {
-        if(_agent.Movement.IsFall())
+        if (_agent.Movement.IsFall())
         {
             _agent.ChangeState(PlayerFSMState.Fall);
         }
+
+        _agent.Movement.SetMove(direction);
     }
+
+    private void HandleMovementEvent(float movement)
+    {
+        direction = movement;
+    }
+
 }

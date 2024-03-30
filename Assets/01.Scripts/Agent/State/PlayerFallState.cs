@@ -8,13 +8,17 @@ public class PlayerFallState : PlayerState
     {
     }
 
+    private float direction = 0.06f;
+
     public override void Enter()
     {
         base.Enter();
+        _agent.Input.OnMovementEvent += HandleMovementEvent;
     }
 
     public override void Exit()
     {
+        _agent.Input.OnMovementEvent -= HandleMovementEvent;
         base.Exit();
     }
 
@@ -24,5 +28,12 @@ public class PlayerFallState : PlayerState
         {
             _agent.ChangeState(PlayerFSMState.Idle);
         }
+
+        _agent.Movement.SetMove(direction);
+    }
+
+    private void HandleMovementEvent(float movement)
+    {
+        direction = movement;
     }
 }

@@ -26,7 +26,11 @@ public class PlayerRunState : PlayerState
 
     public override void UpdateState()
     {
-        //Change
+        if (_agent.Movement.IsFall())
+        {
+            _agent.ChangeState(PlayerFSMState.Fall);
+        }
+
         if (Mathf.Abs(direction) <= 0.05f)
         {
             _agent.ChangeState(PlayerFSMState.Idle);
@@ -34,6 +38,11 @@ public class PlayerRunState : PlayerState
 
         _agent.Movement.SetMove(direction);
 
+    }
+
+    private void HandleMovementEvent(float movement)
+    {
+        direction = movement;
     }
 
     private void HandleJumpEvent(bool value)
@@ -44,9 +53,4 @@ public class PlayerRunState : PlayerState
         }
     }
 
-    //Change
-    private void HandleMovementEvent(float movement)
-    {
-        direction = movement;
-    }
 }

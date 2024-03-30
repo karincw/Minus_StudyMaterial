@@ -17,7 +17,7 @@ public class Agent : MonoBehaviour
     [HideInInspector] public AgentAnimator Animator;
     public AgentInput Input;
 
-    private PlayerFSMState state = PlayerFSMState.Idle;
+    [SerializeField] private PlayerFSMState state = PlayerFSMState.Idle;
     private PlayerState currentState;
     private Dictionary<PlayerFSMState, PlayerState> stateMachine = new();
 

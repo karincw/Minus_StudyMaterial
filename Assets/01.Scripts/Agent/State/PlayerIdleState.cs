@@ -30,6 +30,11 @@ public class PlayerIdleState : PlayerState
 
     public override void UpdateState()
     {
+        if (_agent.Movement.IsFall())
+        {
+            _agent.ChangeState(PlayerFSMState.Fall);
+        }
+
         //Change
         if (Mathf.Abs(direction) >= 0.05f)
         {

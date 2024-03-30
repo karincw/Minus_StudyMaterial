@@ -31,6 +31,18 @@ public class AgentMovement : MonoBehaviour
         _rigidbody.velocity = new Vector2(_moveDirection * moveSpeed, v_velocity);
     }
 
+    private void Update()
+    {
+        if(_moveDirection > 0)
+        {
+            Agent.Animator.SetFlip(false);
+        }
+        else if(_moveDirection < 0)
+        {
+            Agent.Animator.SetFlip(true);
+        }
+    }
+
     public bool IsFall()
     {
         return _rigidbody.velocity.y < -0.1f;
